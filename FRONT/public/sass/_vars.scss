@@ -1,0 +1,12 @@
+// Variables
+
+//font-family
+@font-face {
+  font-family: poppins;
+  src: url(../font/poppins/Poppins-Light.ttf) format('truetype');
+}
+$font-poppins: 'Poppins', sans-serif;
+
+//Colors
+$body-color: #1f1f30;
+$font-color: #fff;

@@ -1,0 +1,97 @@
+@font-face {
+  font-family: poppins;
+  src: url(../font/poppins/Poppins-Light.ttf) format("truetype");
+}
+body {
+  background-color: #1f1f30;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+a {
+  text-decoration: none;
+}
+
+.title {
+  font-size: 3rem;
+  text-align: center;
+}
+
+.home__button {
+  color: #fff;
+  background-color: #1f1f30;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  padding: 0.5rem 0.75rem;
+  margin: 1rem;
+  transition: all 0.35s;
+}
+.home__button:hover {
+  color: #1f1f30;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.authentication__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 25rem;
+  margin: 0 1rem;
+}
+.authentication__role {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 2rem;
+}
+.authentication__role--radio {
+  margin: 1rem;
+}
+.authentication__error-message {
+  color: red;
+  border: 1px solid red;
+  border-radius: 5px;
+  padding: 1rem;
+}
+.authentication label {
+  margin: 0.25rem auto;
+}
+.authentication input[type=text],
+.authentication input[type=password],
+.authentication input[type=email] {
+  font-family: "Poppins", sans-serif;
+  min-width: 5rem;
+  width: 97%;
+  border-radius: 15px;
+  padding: 0.5rem;
+  transition: 0.35s ease;
+}
+.authentication input[type=text]:focus,
+.authentication input[type=password]:focus,
+.authentication input[type=email]:focus {
+  width: 100%;
+  border: 3px solid #1af3cf;
+  outline: none;
+}
+.authentication .password__instructions {
+  font-size: 0.75rem;
+  margin-top: 0;
+}
+.authentication__button {
+  color: #fff;
+  background-color: #1f1f30;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  padding: 0.5rem 0.75rem;
+  margin: 1rem;
+  transition: all 0.35s;
+}
+.authentication__button:hover {
+  color: #1f1f30;
+  background-color: #fff;
+  cursor: pointer;
+}/*# sourceMappingURL=style.css.map */

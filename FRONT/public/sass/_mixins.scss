@@ -1,0 +1,19 @@
+@use './vars.scss';
+
+@mixin button {
+  &__button {
+    color: vars.$font-color;
+    background-color: vars.$body-color;
+    border: 1px solid vars.$font-color;
+    border-radius: 5px;
+    padding: 0.5rem 0.75rem;
+    margin: 1rem;
+    transition: all 0.35s;
+  }
+
+  &__button:hover {
+    color: vars.$body-color;
+    background-color: vars.$font-color;
+    cursor: pointer;
+  }
+}

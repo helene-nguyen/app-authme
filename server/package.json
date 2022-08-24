@@ -1,0 +1,38 @@
+{
+  "type": "module",
+  "name": "api_auhtme",
+  "version": "1.0.0",
+  "description": "Authentication training",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll"
+  },
+  "keywords": [
+    "authentication"
+  ],
+  "author": "Yumicode",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.1",
+    "espress": "^0.0.0",
+    "express-session": "^1.17.3",
+    "helmet": "^5.1.1",
+    "joi": "^17.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^8.8.0",
+    "swagger-jsdoc": "^6.2.5",
+    "swagger-ui-express": "^4.5.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^28.1.8",
+    "debug": "^4.3.4",
+    "supertest": "^6.2.4"
+  },
+  "jest": {
+    "forceExit": true,
+    "collectCoverage": false,
+    "verbose": true,
+    "detectOpenHandles": false
+  }
+}

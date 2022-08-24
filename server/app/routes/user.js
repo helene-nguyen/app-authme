@@ -3,7 +3,7 @@ import { Router } from 'express';
 const router = Router();
 
 //~ Import modules
-import { fetchAllUsers, fetchOneUser, renderSignUpPage, renderSignInPage, doSignUp, doSignIn, doSignOut, renderDashboard } from '../controllers/userController.js';
+import { fetchAllUsers, fetchOneUser, doSignUp, doSignIn, doSignOut } from '../controllers/userController.js';
 
 import { refreshToken } from '../services/jsonWebToken.js';
 

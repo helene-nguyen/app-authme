@@ -22,6 +22,7 @@
     "helmet": "^5.1.1",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
+    "mongodb": "^4.9.0",
     "pg": "^8.8.0",
     "swagger-jsdoc": "^6.2.5",
     "swagger-ui-express": "^4.5.0"

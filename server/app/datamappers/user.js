@@ -6,13 +6,15 @@ class UserDataMapper extends CoreDataMapper {
   collectionName = 'user';
 
   async findUser(email) {
+    
     const db = this.client.db(this.dbName);
 
     const collection = db.collection(this.collectionName);
+    let result;
 
-    const result = await collection.find(email).toArray();
+    email === undefined ? result = null : (result = await collection.find(email).toArray());
 
-    return result[0];
+    return result;
   }
 }
 

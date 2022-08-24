@@ -23,7 +23,7 @@ function errorLoggerHandling(message, req, res) {
     const fileName = `${formattedDate}.log`;
 
     // create a log and write it in your file
-    fs.appendFile(join(__dirname, `../../logs/${fileName}`), logMessage, error => {
+    fs.appendFile(join(__dirname, `../../app/logs/${fileName}`), logMessage, error => {
       if (error) logger(error);
     });
   

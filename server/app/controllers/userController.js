@@ -14,7 +14,7 @@ async function fetchAllUsers(req, res) {
   try {
     const users = await User.findAll();
 
-    if (!users) throw new ErrorApi(`No users found`, '/', '', req, res, 400);
+    if (!users) throw new ErrorApi(`No users found`, req, res, 400);
 
     return res.status(200).json(users);
   } catch (err) {
@@ -26,13 +26,13 @@ async function fetchOneUser(req, res) {
   try {
     const userId = req.params.userId;
 
-    if (typeof userId !== 'string') throw new ErrorApi(`Id must be a string`, '/', '', req, res, 400);
+    if (typeof userId !== 'string') throw new ErrorApi(`Id must be a string`, req, res, 400);
 
     const user = await User.findOne(userId);
 
-    if (!user) throw new ErrorApi(`Aucun utilisateur trouvé`, req, res, 400);
+    if (!user) throw new ErrorApi(`User doesn't exist`, req, res, 400);
 
-    res.status(200).json(user);
+    return res.status(200).json(user);
   } catch (err) {
     logger(err.message);
   }
@@ -42,14 +42,13 @@ async function doSignUp(req, res) {
   try {
     let { email, password, passwordConfirm } = req.body;
 
-    const userExist = await User.findUser({ email });
-    if (userExist) {
-      req.session.errorMSG = 'User already exist !';
-      res.redirect('/signup');
+    if (email) {
+      const userExist = await User.findUser({email});
+      if (userExist) throw new ErrorApi(`User already exists !`, req, res, 401);
     }
 
     //~ Encrypt password if password exist
-    if (password !== passwordConfirm) (req.session.errorMSG = 'Please enter the same password !'), res.redirect('/signup');
+    if (password !== passwordConfirm) throw new ErrorApi(`Please enter the same passwork`, req, res, 401);
     const salt = await bcrypt.genSalt(10);
     password = await bcrypt.hash(password, salt);
     //replace password in body
@@ -59,9 +58,10 @@ async function doSignUp(req, res) {
     req.body = { ...req.body, role: 'user' };
     const { ['passwordConfirm']: remove, ...user } = req.body;
 
-    await User.create(user);
+    //~ Create user
+    // const userCreated = await User.create(user);
 
-    res.redirect('/signin');
+    return res.status(201).json(`User created successfully !`);
   } catch (err) {
     logger(err.message);
   }
@@ -76,7 +76,6 @@ async function doSignIn(req, res) {
     logger(err.message);
   }
 }
-
 
 async function doSignOut(req, res) {
   try {

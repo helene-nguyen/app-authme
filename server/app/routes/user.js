@@ -19,7 +19,7 @@ import { auth, admin } from '../middlewares/auth.js';
 router.get('/users', fetchAllUsers);
 router.get('/users/:userId', fetchOneUser);
 
-router.post('/signup', doSignUp); // create user
+router.post('/signup',validation.body(userSignUpSchema), doSignUp); // create user
 router.post('/signin', doSignIn);
 router.get('/signout', doSignOut);
 

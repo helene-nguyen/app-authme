@@ -13,8 +13,8 @@ class UserDataMapper extends CoreDataMapper {
     let result;
 
     email === undefined ? result = null : (result = await collection.find(email).toArray());
-
-    return result;
+  
+    return result[0];
   }
 }
 

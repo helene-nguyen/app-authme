@@ -23,8 +23,8 @@ POST {{entryPoint}}/signup
 Content-Type: application/json
 
 {
-   "username": "tttt",
-   "email": "admin@admin-account.com",
+   "username": "hello-test",
+   "email": "test@test-account.com",
    "password": "aze&AZE123",
    "passwordConfirm": "aze&AZE123"
 

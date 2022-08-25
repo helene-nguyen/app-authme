@@ -28,7 +28,7 @@ const logger = debug('EntryPoint');
 app.use(express.json());
 // accept Content-type: application/x-www-form-urlencoded
 app.use(express.urlencoded({
-extended: false
+extended: true
 }));
 
 //~ Cors

@@ -48,16 +48,19 @@ async function doSignUp(req, res) {
     }
 
     //~ Encrypt password if password exist
-    if (password !== passwordConfirm) throw new ErrorApi(`Please enter the same passwork`, req, res, 401);
+    if (password !== passwordConfirm) throw new ErrorApi(`Please enter the same password`, req, res, 401);
     const salt = await bcrypt.genSalt(10);
     password = await bcrypt.hash(password, salt);
     //replace password in body
     req.body.password = password;
 
     //~ Add role + remove passwordconfirm
+    // console.log("\x1b[1;34m ---------------------------------------\x1b[0m ");
+    // console.log("✨\x1b[1;34m YOU BODY BEFORE ADDING SOMETHING:\x1b[0m ", req.body);
+    
     req.body = { ...req.body, role: 'user' };
     const { ['passwordConfirm']: remove, ...user } = req.body;
-
+    
     //~ Create user
     // const userCreated = await User.create(user);
 
@@ -71,7 +74,7 @@ async function doSignIn(req, res) {
   try {
     console.log(req.body.email);
 
-    res.redirect('/dashboard');
+    res.json('none');
   } catch (err) {
     logger(err.message);
   }
@@ -79,10 +82,27 @@ async function doSignIn(req, res) {
 
 async function doSignOut(req, res) {
   try {
-    res.redirect('/');
+    res.json('none');
   } catch (err) {
     logger(err.message);
   }
 }
 
-export { fetchAllUsers, fetchOneUser, doSignUp, doSignIn, doSignOut };
+async function updateUser(req, res) {
+  try {
+    res.json('none');
+  } catch (err) {
+    logger(err.message);
+  }
+}
+
+async function deleteUser(req, res) {
+  try {
+    res.json('none');
+  } catch (err) {
+    logger(err.message);
+  }
+}
+
+
+export { fetchAllUsers, fetchOneUser, doSignUp, doSignIn, doSignOut, updateUser, deleteUser } ;

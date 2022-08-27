@@ -10,8 +10,7 @@ const userSignUpSchema = Joi.object({
 
   password: Joi.string().pattern(new RegExp('^(?=.*[0-9])(?=.*[-a-z])(?=.*[-A-Z]).{8,}$')),
 
-  passwordConfirm: Joi.string().pattern(new RegExp('^(?=.*[0-9])(?=.*[-a-z])(?=.*[-A-Z]).{8,}$')),
-
+  passwordConfirm: Joi.string().pattern(new RegExp('^(?=.*[0-9])(?=.*[-a-z])(?=.*[-A-Z]).{8,}$'))
 })
   .required()
   .min(4)
@@ -23,10 +22,23 @@ const userSignInSchema = Joi.object({
 
   password: Joi.string().pattern(new RegExp('^(?=.*[0-9])(?=.*[-a-z])(?=.*[-A-Z]).{8,}$')),
 
-  role: Joi.string().pattern(new RegExp('^(admin | user)$'))
+  role: Joi.string().pattern(new RegExp('^admin|user$'))
 })
   .required()
   .min(3)
   .max(3);
 
-export { userSignInSchema, userSignUpSchema };
+//~ User schema SignIn
+const userUpdateSchema = Joi.object({
+  username: Joi.string(),
+  email: Joi.string().pattern(new RegExp('^[-a-zA-Z0-9.-_]+@[\\w-]+(?:\\.[\\w-]{2,4})$')),
+
+  password: Joi.string().pattern(new RegExp('^(?=.*[0-9])(?=.*[-a-z])(?=.*[-A-Z]).{8,}$')),
+
+  passwordConfirm: Joi.string().pattern(new RegExp('^(?=.*[0-9])(?=.*[-a-z])(?=.*[-A-Z]).{8,}$'))
+
+})
+  .min(1)
+  .max(4);
+
+export { userSignInSchema, userSignUpSchema, userUpdateSchema };

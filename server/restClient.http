@@ -1,6 +1,6 @@
-@entryPoint = http://localhost:4100
+@entryPoint = http://localhost:4110
 
-#@accessToken = Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxMSwidXNlcm5hbWUiOiJZdW1lZG8iLCJ0aXRsZSI6IlN1cGVyIHRpdHJlIiwicHJvZmlsZV9waWNfdXJsIjoiaHR0cHM6Ly9jbG91ZGZsYXJlLWlwZnMuY29tL2lwZnMvUW1kM1c1RHVoZ0hpckxIR1ZpeGk2Vjc2TGhDa1pVejZwbkZ0NUFKQml5dkh5ZS9hdmF0YXIvOTQwLmpwZyIsImlzQWN0aXZlIjp0cnVlLCJyb2xlIjoiYWRtaW4ifSwiaWF0IjoxNjU5NzEyMDkwLCJleHAiOjE2NTk3MTI5OTB9.wzXa4tGQyLGgslUXDyIi3t0repcXJwh7HZCbNwO40N4
+@accessToken = Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYzMDc3ZmRmMjE1NWUyNGM4YmFmYzA5NyIsInVzZXJuYW1lIjoibmV3LXRlc3QiLCJlbWFpbCI6Im5ld0B0ZXN0LWFjY291bnQuY29tIiwicm9sZSI6InVzZXIifSwiaWF0IjoxNjYxNDM3NDY5LCJleHAiOjE2NjIwNDIyNjl9.V9y1KaVAr42ig8Wf_OByKCl_FDVEVM_uonlF2Idsy5k
 
 #@refreshToken = Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxMSwidXNlcm5hbWUiOiJZdW1lZG8iLCJ0aXRsZSI6bnVsbCwicHJvZmlsZV9waWNfdXJsIjpudWxsLCJpc0FjdGl2ZSI6dHJ1ZSwicm9sZSI6ImFkbWluIn0sImlhdCI6MTY1OTM3NzQ2MiwiZXhwIjoxNjU5MzgxMDYyfQ.FN5S9Ym-hSiRz26g3mcrysZTfbAAL1WYgwvnsvZQZWM
 
@@ -10,22 +10,34 @@ Content-Type: application/json
 
 ###* USERS
 
-###
+###~ALL
 GET {{entryPoint}}/users
 Content-Type: application/json
 
-###
-GET {{entryPoint}}/users/6304c6605a829bc3f52e122f
+###~ONE
+GET {{entryPoint}}/users/630f2155e24c8bafc097
 Content-Type: application/json
+{{accessToken}}
 
-###
+###~SIGNUP
 POST {{entryPoint}}/signup
 Content-Type: application/json
 
 {
-   "username": "hello-test",
-   "email": "test@test-account.com",
+   "username": "admin",
+   "email": "admin@admin-account.com",
    "password": "aze&AZE123",
    "passwordConfirm": "aze&AZE123"
+
+}
+
+###~SIGNIN
+POST {{entryPoint}}/signin
+Content-Type: application/json
+
+{
+   "email": "new@test-account.com",
+   "password": "aze&AZE123",
+   "role": "user"
 
 }

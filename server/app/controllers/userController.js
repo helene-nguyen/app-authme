@@ -31,6 +31,9 @@ async function fetchOneUser(req, res) {
     const user = await User.findOne(userId);
 
     if (!user) throw new ErrorApi(`User doesn't exist`, req, res, 400);
+  
+    const isUser = req.user._id;
+    if(isUser !== userId && isUser !== 'string') throw new ErrorApi(`Bad Request`, req, res, 400);
 
     return res.status(200).json(user);
   } catch (err) {
@@ -43,7 +46,7 @@ async function doSignUp(req, res) {
     let { email, password, passwordConfirm } = req.body;
 
     if (email) {
-      const userExist = await User.findUser({email});
+      const userExist = await User.findUser({ email });
       if (userExist) throw new ErrorApi(`User already exists !`, req, res, 401);
     }
 
@@ -57,12 +60,14 @@ async function doSignUp(req, res) {
     //~ Add role + remove passwordconfirm
     // console.log("\x1b[1;34m ---------------------------------------\x1b[0m ");
     // console.log("✨\x1b[1;34m YOU BODY BEFORE ADDING SOMETHING:\x1b[0m ", req.body);
-    
+
     req.body = { ...req.body, role: 'user' };
     const { ['passwordConfirm']: remove, ...user } = req.body;
-    
+
     //~ Create user
-    // const userCreated = await User.create(user);
+    const userCreated = await User.create(user);
+
+    if (!userCreated) throw new ErrorApi(`User creation failed`, req, res, 400);
 
     return res.status(201).json(`User created successfully !`);
   } catch (err) {
@@ -72,9 +77,27 @@ async function doSignUp(req, res) {
 
 async function doSignIn(req, res) {
   try {
-    console.log(req.body.email);
+    let { email, password } = req.body;
 
-    res.json('none');
+    //~ User already exist ?
+    const userExist = await User.findUser({ email });
+    if (!userExist) throw new ErrorApi(`Unknown user !`, req, res, 401);
+
+    //~ Security
+    const validPwd = await bcrypt.compare(password, userExist.password);
+
+    if (!validPwd) throw new ErrorApi(`Error on e-mail or password`, req, res, 401);
+
+    const { ['password']: remove, ...user } = userExist;
+
+    //~ Authorization JWT
+    let accessToken = generateAccessToken({ user });
+    let refreshToken = generateRefreshToken({ user }, req);
+
+    let userIdentity = { ...user, accessToken, refreshToken };
+
+    return res.status(200).json(userIdentity);
+
   } catch (err) {
     logger(err.message);
   }
@@ -104,5 +127,4 @@ async function deleteUser(req, res) {
   }
 }
 
-
-export { fetchAllUsers, fetchOneUser, doSignUp, doSignIn, doSignOut, updateUser, deleteUser } ;
+export { fetchAllUsers, fetchOneUser, doSignUp, doSignIn, doSignOut, updateUser, deleteUser };

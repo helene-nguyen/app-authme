@@ -9,7 +9,7 @@ import { refreshToken } from '../services/jsonWebToken.js';
 
 //~ Import schema
 import { validation } from '../services/validation.js';
-import { userSignUpSchema, userSignInSchema } from '../schema/user.schema.js';
+import { userSignUpSchema, userSignInSchema, userUpdateSchema } from '../schema/user.schema.js';
 //~ Authorization
 import { validateToken } from '../middlewares/validateToken.js';
 import { auth, admin } from '../middlewares/auth.js';
@@ -22,9 +22,9 @@ router.post('/signin', validation.body(userSignInSchema),doSignIn);
 router.get('/signout', doSignOut);
 //
 router.get('/users', fetchAllUsers);
-router.get('/users/:userId', fetchOneUser);
-router.patch('/users/:userId', updateUser);
-router.delete('/users/:userId', deleteUser);
+router.get('/users/:userId', [validateToken, auth],fetchOneUser);
+router.patch('/users/:userId',[validateToken, auth, admin],validation.body(userUpdateSchema), updateUser);
+router.delete('/users/:userId', [validateToken, auth, admin],deleteUser);
 //
 router.post('/refreshtoken', refreshToken);
 

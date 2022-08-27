@@ -20,10 +20,13 @@ class CoreDataMapper {
 
   async findOne(id) {
     const db = this.client.db(this.dbName);
-
     const collection = db.collection(this.collectionName);
 
-    const result = await collection.find(ObjectId(id)).toArray();
+    //~test if id is "a string of 12 bytes or a string of 24 hex characters or an integer"
+    const isIdValid = ObjectId.isValid(id);
+    let result;
+
+    isIdValid ? result = await collection.find(ObjectId(id)).toArray() : result = [false];
 
     return result[0];
   }

@@ -18,7 +18,6 @@ function validateToken(req, res, next) {
           throw new ErrorApi('Invalid token !', req, res, 403);
         }
         req.user = user.user;
-
         req.session.token = accessToken;
         
         next();

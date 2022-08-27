@@ -5,6 +5,7 @@ const logger = debug('Jwt');
 //~ Import modules
 import jwt from 'jsonwebtoken';
 import { ErrorApi } from './errorHandler.js';
+import { User } from '../datamappers/index.js';
 
 
 //~  Jwt Access_Token

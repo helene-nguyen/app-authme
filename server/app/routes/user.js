@@ -23,8 +23,8 @@ router.get('/signout', doSignOut);
 //
 router.get('/users', fetchAllUsers);
 router.get('/users/:userId', [validateToken, auth],fetchOneUser);
-router.patch('/users/:userId',[validateToken, auth, admin],validation.body(userUpdateSchema), updateUser);
-router.delete('/users/:userId', [validateToken, auth, admin],deleteUser);
+router.patch('/users/:userId',[validateToken, auth],validation.body(userUpdateSchema), updateUser);
+router.delete('/users/:userId', [validateToken, auth],deleteUser);
 //
 router.post('/refreshtoken', refreshToken);
 

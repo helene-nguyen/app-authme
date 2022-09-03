@@ -1,6 +1,6 @@
 @entryPoint = http://localhost:4110
 
-@accessToken = Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYzMDc3ZmRmMjE1NWUyNGM4YmFmYzA5NyIsInVzZXJuYW1lIjoibmV3LXRlc3QiLCJlbWFpbCI6Im5ld0B0ZXN0LWFjY291bnQuY29tIiwicm9sZSI6InVzZXIifSwiaWF0IjoxNjYxNDM3NDY5LCJleHAiOjE2NjIwNDIyNjl9.V9y1KaVAr42ig8Wf_OByKCl_FDVEVM_uonlF2Idsy5k
+@accessToken = Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYzMTM0OGVjYmVjOTNkZjQ1MzU3OTUzOCIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImF6ZUBhemUtYWNjb3VudC5jb20iLCJyb2xlIjoidXNlciJ9LCJpYXQiOjE2NjIyMDk3MzIsImV4cCI6MTY2MjgxNDUzMn0.WIrHgODsDEESGpdivVL6d2EsET5EWAO7_QlExRjSZ_0
 
 #@refreshToken = Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxMSwidXNlcm5hbWUiOiJZdW1lZG8iLCJ0aXRsZSI6bnVsbCwicHJvZmlsZV9waWNfdXJsIjpudWxsLCJpc0FjdGl2ZSI6dHJ1ZSwicm9sZSI6ImFkbWluIn0sImlhdCI6MTY1OTM3NzQ2MiwiZXhwIjoxNjU5MzgxMDYyfQ.FN5S9Ym-hSiRz26g3mcrysZTfbAAL1WYgwvnsvZQZWM
 
@@ -15,7 +15,7 @@ GET {{entryPoint}}/users
 Content-Type: application/json
 
 ###~ONE
-GET {{entryPoint}}/users/630f2155e24c8bafc097
+GET {{entryPoint}}/users/631348ecbec93df453579538
 Content-Type: application/json
 {{accessToken}}
 
@@ -25,7 +25,7 @@ Content-Type: application/json
 
 {
    "username": "admin",
-   "email": "admin@admin-account.com",
+   "email": "aze@aze-account.com",
    "password": "aze&AZE123",
    "passwordConfirm": "aze&AZE123"
 
@@ -36,8 +36,23 @@ POST {{entryPoint}}/signin
 Content-Type: application/json
 
 {
-   "email": "new@test-account.com",
+   "email": "aze@aze-account.com",
    "password": "aze&AZE123",
    "role": "user"
 
 }
+
+###~Update
+PATCH {{entryPoint}}/users/631348ecbec93df453579538
+Content-Type: application/json
+{{accessToken}}
+
+{
+    "username": "New name",
+    "email": "newupdate@newupdate-account.com"
+}
+
+###~Delete
+DELETE {{entryPoint}}/users/6309b9164b1a9959cab3f407
+Content-Type: application/json
+{{accessToken}}

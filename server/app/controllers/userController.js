@@ -31,11 +31,11 @@ async function fetchOneUser(req, res) {
     const user = await User.findOne(userId);
 
     if (!user) throw new ErrorApi(`User doesn't exist`, req, res, 400);
-  
-    const isUser = req.user._id;
-    if(isUser !== userId && isUser !== 'string') throw new ErrorApi(`Bad Request`, req, res, 400);
 
-    return res.status(200).json(user);
+    const isUser = req.user._id;
+    //only the user that want to access his info can or admin
+    if (isUser === userId || req.user.role === 'admin') return res.status(200).json(user);
+    else throw new ErrorApi(`You cannot access this info, go away !`, req, res, 400);
   } catch (err) {
     logger(err.message);
   }
@@ -80,7 +80,7 @@ async function doSignIn(req, res) {
     let { email, password } = req.body;
 
     //~ User already exist ?
-    const userExist = await User.findUser({ email });
+    const userExist = await User.findUser(email);
     if (!userExist) throw new ErrorApi(`Unknown user !`, req, res, 401);
 
     //~ Security
@@ -97,7 +97,6 @@ async function doSignIn(req, res) {
     let userIdentity = { ...user, accessToken, refreshToken };
 
     return res.status(200).json(userIdentity);
-
   } catch (err) {
     logger(err.message);
   }
@@ -105,7 +104,10 @@ async function doSignIn(req, res) {
 
 async function doSignOut(req, res) {
   try {
-    res.json('none');
+    req.user = null;
+    req.session.destroy();
+
+    return res.status(204).json(`User `);
   } catch (err) {
     logger(err.message);
   }
@@ -113,7 +115,32 @@ async function doSignOut(req, res) {
 
 async function updateUser(req, res) {
   try {
-    res.json('none');
+    let { email, password, passwordConfirm } = req.body;
+
+    const userExist = await User.findUser(email);
+    if (userExist) throw new ErrorApi(`User already exists !`, req, res, 401);
+
+    const userId = req.params.userId;
+
+    const oneUser = await User.findOne(userId);
+    if (!oneUser) throw new ErrorApi(`User doesn't exist`, req, res, 404);
+
+    //~ Encrypt password if password exist
+    if (password !== passwordConfirm) throw new ErrorApi(`Please enter the same password`, req, res, 401);
+    if (password) {
+      const salt = await bcrypt.genSalt(10);
+      password = await bcrypt.hash(password, salt);
+      req.body.password = password;
+      delete req.body['passwordConfirm'];
+    }
+
+    const isUser = req.user._id;
+    //only the user that want to access his info can or admin
+    if (isUser === userId || req.user.role === 'admin') {
+      await User.updateOne(userId, req.body);
+
+      return res.status(200).json(`User updated successfully !`);
+    } else throw new ErrorApi(`You cannot do that, go away !`, req, res, 400);
   } catch (err) {
     logger(err.message);
   }
@@ -121,7 +148,18 @@ async function updateUser(req, res) {
 
 async function deleteUser(req, res) {
   try {
-    res.json('none');
+    const userId = req.params.userId;
+
+    const oneUser = await User.findOne(userId);
+    if (!oneUser) throw new ErrorApi(`User doesn't exist`, req, res, 404);
+
+    const isUser = req.user._id;
+    //only the user that want to access his info can or admin
+    if (isUser === userId || req.user.role === 'admin') {
+      await User.delete(userId);
+
+      return res.status(200).json(`Your account is successfully deleted !`);
+    } else throw new ErrorApi(`You cannot do that, go away !`, req, res, 400);
   } catch (err) {
     logger(err.message);
   }

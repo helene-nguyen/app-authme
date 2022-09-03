@@ -8,16 +8,16 @@ function auth(req, res, next) {
   next();
 }
 
-function role(req, res, next) {
-  if (req.user.role === 'admin') {
-    next();
-  } else {throw new ErrorApi(`Accès interdit !`, req, res, 403);}
+// function role(req, res, next) {
+//   if (req.user.role === 'admin') {
+//     next();
+//   } else {throw new ErrorApi(`Accès interdit !`, req, res, 403);}
   
-}
+// }
 
 function admin(req, res, next) {
-    if (req.user.role !== 'admin') throw new ErrorApi(`Forbidden ! The user is not admin`, req, res, 403);
+    if (req.user?.role !== 'admin') throw new ErrorApi(`Forbidden ! The user is not admin`, req, res, 403);
     next();
 }
 
-export { auth, admin, role };
+export { auth, admin };

@@ -136,7 +136,7 @@ async function updateUser(req, res) {
 
     const isUser = req.user._id;
     //only the user that want to access his info can or admin
-    if (isUser === userId || req.user.role === 'admin') {
+    if (isUser === userId) {
       await User.updateOne(userId, req.body);
 
       return res.status(200).json(`User updated successfully !`);
